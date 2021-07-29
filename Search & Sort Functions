@@ -1,0 +1,141 @@
+// LINEAR SEARCH
+
+#include <iostream>
+#include <array>
+using namespace std;
+
+const int SIZE = 5;
+int linearSearch(array<int, SIZE>, int);
+
+int main()
+{
+    array<int, SIZE> tests {87, 75, 98, 100, 82};
+    int results;
+    results = linearSearch(tests, 100);
+
+    if (results == -1)
+        cout << "You didn't score 100 at all, sorry dude\n";
+    else
+        cout << "You earned a 100 on test " << results + 1 << endl;
+    return 0;
+}
+
+int linearSearch(array<int, SIZE> arr, int value)
+{
+    int position = -1;
+    int index = 0;
+    bool found = false;
+
+    while (index < SIZE and !found)
+    {
+        if (arr[index] == value)
+        {
+            found = true;
+            position = index;
+        }
+        index++;
+    }
+    return position;
+}
+
+
+// BINARY SEARCH
+// #include <iostream>
+#include <array>
+using namespace std;
+
+const int SIZE = 5;
+int binarySearch(array<int, SIZE>, int);
+
+int main()
+{
+    array<int, SIZE> tests {75, 82, 87, 98, 100};
+    int results;
+
+    results = binarySearch(tests, 100);
+
+    if (results == -1)
+        cout << "You didn't score 100 at all, sorry dude\n";
+    else
+        cout << "You earned a 100 on test " << results + 1 << endl;
+    return 0;
+}
+
+int binarySearch(array<int, SIZE> arr, int value)
+{
+    int position = -1, first = 0, last = SIZE - 1, middle;
+    bool found = false;
+
+    while (first <= last and !found)
+    {
+        middle = (first + last) / 2;
+        if (arr[middle] == value)
+        {
+            found = true;
+            position = middle;
+        }
+        else if (arr[middle] > value)
+            last = middle - 1;
+        else
+            first = middle + 1;
+    }
+    return position;
+}
+
+
+// BUBBLE SORT
+
+#include <iostream>
+#include <array>
+using namespace std;
+
+const int SIZE = 6;
+void bubbleSort(array<int, SIZE> &);
+void swap(int&, int&);
+
+int main()
+{
+    array<int, SIZE> values {10, 8, 32, 54, 44, 21};
+    cout << "Unsorted: ";
+    for (int val : values)
+        cout << val << " ";
+    cout << endl;
+
+    bubbleSort(values);
+
+    cout << "Sorted: ";
+    for (int val : values)
+        cout << val << " ";
+    cout << endl;
+
+    return 0;
+}
+
+
+// SELECT SORT
+
+#include <iostream>
+#include <array>
+using namespace std;
+
+const int SIZE = 6;
+void selectSort(array<int, SIZE> &);
+void swap(int&, int&);
+
+int main()
+{
+    array<int, SIZE> values {61, 24, 52, 30, 9, 40};
+    cout << "Unsorted: ";
+    for (int val : values)
+       cout << val << " ";
+    cout << endl;
+
+    selectSort(values);
+
+    cout << "Sorted: ";
+    for (int val : values)
+        cout << val << " ";
+    cout << endl;
+
+    return 0;
+}
