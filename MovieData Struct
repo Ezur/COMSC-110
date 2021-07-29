@@ -1,0 +1,58 @@
+#include <iostream>
+#include <iomanip>
+#include <fstream>
+using namespace std;
+
+struct MovieData
+{
+    string title;
+    string director;
+    int year;
+    int length;
+    int cost;
+    int revenues;
+};
+
+MovieData populateMovie(ifstream &f);
+void displayMovie(MovieData);
+
+int main()
+{
+    //housekeeping
+    ifstream fin("moviedata.txt");
+
+    //create two MovieData objects
+    MovieData movie1 = populateMovie(fin);
+    MovieData movie2 = populateMovie(fin);
+    fin.close();
+
+    //output both objects
+    displayMovie(movie1);
+    displayMovie(movie2);
+
+    return 0;
+}
+
+MovieData populateMovie(ifstream &fin)
+{
+    MovieData m;
+    getline(fin, m.title);
+    getline(fin, m.director);
+    fin >> m.year;
+    fin >> m.length;
+    fin >> m.cost;
+    fin >> m.revenues;
+    fin.ignore();
+    return m;
+}
+
+void displayMovie(MovieData m)
+{
+    cout << "Movie data:\n" << fixed;
+    cout << "\t> Title: " << m.title << endl;
+    cout << "\t> Director: " << m.director << endl;
+    cout << "\t> Year released: " << m.year << endl;
+    cout << "\t> Length: " << m.length << endl;
+    cout << "\t> Production costs: $" << m.cost << endl;
+    cout << "\t> First year revenue: $" << m.revenues << endl << endl;
+}
