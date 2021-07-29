@@ -1,0 +1,84 @@
+#include <iostream>
+#include <iomanip>
+using namespace std;
+
+const int ROWS = 3, COLS = 3;
+const int W1 = 6;
+
+double grandTotal(double[][COLS]);
+
+int main()
+{
+    double vals[ROWS][COLS] =
+          { {1.1, 2.2, 3.3},
+	    	{4.4, 5.5, 6.6},
+			{7.7, 8.8, 9.9} };
+	//GOAL: sum, average, high, low, sum of rows/cols
+
+	//traverse array and print
+	for (int r = 0; r < ROWS; r++)
+	{
+		for (int c = 0; c < COLS; c++)
+			cout << setw(W1) << vals[r][c];
+		cout << endl;
+	}
+
+	//traverse array and figure sum/average
+	double sum = 0.0;
+	for (int r = 0; r < ROWS; r++)
+		for (int c = 0; c < COLS; c++)
+			sum += vals[r][c];
+	cout << "\nSum: " << sum << endl;
+	cout << "Average: " << sum / (ROWS * COLS) << endl;
+
+	//traverse array and figure high/low
+	double high = 0.0, low = 0.0;
+	high = low = vals[0][0];
+	for (int r = 0; r < ROWS; r++)
+	{
+		for (int c = 0; c < COLS; c++)
+		{
+			if (vals[r][c] > high) .
+                high = vals[r][c];
+			if (vals[r][c] < low) 
+                low = vals[r][c];
+		}
+	}
+	cout << "\nHigh: " << high << endl;
+	cout << "Low: " << low << endl;
+
+	//traverse array and figure row totals
+	double rowSum = 0.0;
+	for (int r = 0; r < ROWS; r++)
+	{
+		rowSum = 0.0;
+		for (int c = 0; c < COLS; c++)
+			rowSum += vals[r][c];
+		cout << "Sum for row #" << r << ": " << rowSum << endl;
+	}
+
+	//traverse array and figure column totals
+    //note that we just reverse the indices in the for loop headers
+	double colSum = 0.0;
+	for (int c = 0; c < COLS; c++)
+	{
+		colSum = 0.0;
+		for (int r = 0; r < ROWS; r++)
+			colSum += vals[r][c];
+		cout << "Sum for column #" << c << ": " << colSum << endl;
+	}
+
+	//sum array via function
+	cout << "Grand total: " << grandTotal(vals) << endl;
+
+    return 0;
+}
+
+double grandTotal(double arr[][COLS])
+{
+	double sum = 0.0;
+	for (int r = 0; r < ROWS; r++)
+		for (int c = 0; c < COLS; c++)
+			sum += arr[r][c];
+	return sum;
+}
