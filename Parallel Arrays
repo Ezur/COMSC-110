@@ -1,0 +1,28 @@
+#include <iostream>
+using namespace std;
+
+const int SIZE = 3;
+void outputData(string[], int[], bool[]);
+
+int main()
+{
+    string names[SIZE] = {"Marc", "William", "Mario"};
+	int ages[SIZE] = {97, 86, 79};
+	bool married[SIZE] = {true, false, true};
+
+	outputData(names, ages, married);
+
+    return 0;
+}
+
+void outputData(string n[], int a[], bool m[])
+{
+	for (int i = 0; i < SIZE; i++)
+	{
+		cout << "Student #" << i+1 << " data:\n";
+		cout << "\tName: " << n[i] << endl;
+		cout << "\tAge: " << a[i] << endl;
+		cout << "\tMarried: ";
+		m[i] ? cout << "Yes\n" : cout << "No\n";
+	}
+}
