@@ -1,0 +1,67 @@
+Write a program that will create and store a vector of structs.
+
+Generally, any color can be described the intensity of red, green, and blue hues respectively. These hues are valued in the range of 0-255, and are abbreviated R/G/B values for red/green/blue.
+
+Write a struct named "Color" that will store r/g/b values for a color.
+
+Generate a random number between 5-50, and this number will be the number of colors that we push into the vector. With that random number, use a loop to create a temporary struct, and then push it into the vector. Remember, to create a struct, you'll have to define r/g/b values for that color; use random values 0-255 for this. Also remember, once you've generated random color values for r/g/b,  you can initialize a struct this way:
+
+Color tempColor = {r, g, b};
+At the end of your program, output a table with the Color# and values for R/G/B as shown below. Note that the column values are right-justified, so ensure you use cout manipulators to achieve this right justification.
+
+    Color#   R value   G value  B value
+    ------   -------   -------  -------
+       1       221       239        74
+       2        48       138       136
+       3       222       152        35
+       4       138       176       222
+       5       100       208       253
+       6       214        32       247
+       7       195        23       223
+       
+       
+#include <iostream>
+#include <iomanip>
+#include <vector>
+#include <ctime>
+using namespace std;
+
+struct Color {
+    int r;
+    int g;
+    int b;
+};
+
+const int MIN = 5, MAX = 50, MINC = 0, MAXC = 255, W1 = 10;
+
+int main()
+{
+    vector<Color> colors;
+    srand(time(0));
+
+    //first generate the number of colors to be pushed into the vector
+    int nrColors = rand() % (MAX - MIN + 1) + MIN;
+
+    //push that many Color stucts into the vector
+    for (int i = 1; i <= nrColors; i++)
+    {
+        //first generate random R/G/B values to push
+        int r = rand() % (MAXC - MINC + 1) + MINC;
+        int g = rand() % (MAXC - MINC + 1) + MINC;
+        int b = rand() % (MAXC - MINC + 1) + MINC;
+
+        Color temp = {r, g, b};
+        colors.push_back(temp);
+    }
+
+    //output the colors in the vector
+    cout << setw(W1) << "Color#" << setw(W1) << "R value"
+         << setw(W1) << "G value" << setw(W1) << "B value\n";
+    cout << setw(W1) << "------" << setw(W1) << "-------"
+    	 << setw(W1) << "-------" << setw(W1) << "-------\n";
+    for (long long unsigned int i = 0; i < colors.size(); i++)
+        cout << setw(W1 - 2) << i + 1 << setw(W1) << colors[i].r << setw(W1) << colors[i].g
+             << setw(W1) <<  colors[i].b << endl;
+
+    return 0;
+}
