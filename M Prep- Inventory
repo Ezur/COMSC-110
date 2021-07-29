@@ -1,0 +1,25 @@
+#include <iostream>
+#include <iomanip>
+#include <fstream>
+using namespace std;
+
+int main()
+{
+    ifstream infile;
+    infile.open("input.txt");
+    string line;
+
+    cout << "***PARTS INVENTORY***\n\n";
+    cout << left << setw(16) << "Part number" << setw(12) << "Description" << endl;
+    cout << setw(16) << "-----------" << setw(12) << "-----------" << endl;
+    
+    while (getline(infile, line))    
+    {
+        cout << setw(16) << line << " ";
+        getline(infile, line);
+        cout << setw(16) << line << endl;
+    }
+    
+    infile.close();
+    return 0;
+}
