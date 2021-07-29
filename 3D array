@@ -1,0 +1,21 @@
+#include <iostream>
+using namespace std;
+
+const int ROWS = 2, COLS = 2, FIELDS = 2;
+
+int main()
+{
+    int values[][COLS][FIELDS] =
+	  { {  {3, 4}, {5, 6}  },
+		{  {3, 0}, {2, 7}  }  };
+
+	for (int r = 0; r < ROWS; r++)
+		for (int c = 0; c < COLS; c++)
+		{
+			for (int f = 0; f < FIELDS; f++)
+				cout << values[r][c][f] << " ";
+			cout << endl;
+		}
+
+	return 0;
+}
