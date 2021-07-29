@@ -1,0 +1,52 @@
+//this program converts a "short address" in the format of
+//"Alameda, CA" to a "full address" of "Alameda, California"
+#include <iostream>
+#include <string>
+using namespace std;
+
+const int ROWS = 2, COLS = 4;
+
+int main()
+{
+    string states[ROWS][COLS] =
+        { {"CA", "FL", "NC", "AZ"},
+          {"California", "Florida", "North Carolina", "Arizona"} };
+
+    string address = "Alameda, CA";
+    cout << "Short address is: " << address << endl;
+    string full_state;
+    string short_state;
+
+    int index = address.find(", ");
+    index += 2;
+
+    //get the short_state
+    short_state = address.substr(index, 2);
+    cout << "Short state is: " << short_state << endl;
+
+    //find the full name of the state and replace it in the string
+    for (int i = 0; i < COLS; i++)
+        if (states[0][i] == short_state)
+            full_state = states[1][i];
+   cout << "Full state is: " << full_state << endl;
+   address.replace(index, 2, full_state);
+   cout << "Full address is: " << address << endl;
+
+   cout << "\n\n***New demo***\n";
+   address = "Phoenix, AZ";
+   index = address.find(", ");
+   index += 2;
+   short_state = address.substr(index, 2); // get the short state from string
+   cout << "Short state is: " << short_state << endl;
+
+   //find the full name of the state and replace it in the string
+   for (int i = 0; i < COLS; i++)
+       if (states[0][i] == short_state)
+           full_state = states[1][i];
+  cout << "Full state is: " << full_state << endl;
+  address.replace(index, 2, full_state);
+  cout << "Full address is: " << address << endl;
+
+
+    return 0;
+}
