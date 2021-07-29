@@ -1,0 +1,187 @@
+#include <iostream>
+#include <iomanip>
+#include <fstream>
+#include <array>
+using namespace std;
+
+struct Drink
+{
+    string name;
+    float cost;
+    int onHand;
+};
+
+const int SIZE = 5;
+int showMenu();
+void loadInventory(array<Drink, SIZE> &);
+void displayInventory(array<Drink, SIZE>);
+void purchaseDrink(array<Drink, SIZE> &);
+void restock(array<Drink, SIZE> &);
+void bubbleSort(array<Drink, SIZE> &);
+void swap(int &, int &);
+
+int main()
+{
+    array<Drink, SIZE> machine;
+    loadInventory(machine);
+    bubbleSort(machine);
+    int choice = showMenu();
+    while (choice != 4)
+    {
+        switch (choice)
+        {
+        case 1:
+            displayInventory(machine);
+            break;
+        case 2:
+            purchaseDrink(machine);
+            break;
+        case 3:
+            restock(machine);
+            break;
+        }
+        choice = showMenu();
+    }
+    return 0;
+}
+
+void loadInventory(array<Drink, SIZE> &d)
+{
+    ifstream fin("drink_stock.txt");
+    for (int i = 0; i < SIZE; i++)
+    {
+        getline(fin, d[i].name);
+        fin >> d[i].cost;
+        fin >> d[i].onHand;
+        fin.ignore();
+    }
+    fin.close();
+}
+
+void restock(array<Drink, SIZE> &d)
+{
+    cout << "Select drink to restock:\n";
+    int choice;
+    for (int i = 0; i < SIZE; i++)
+        cout << "\t" << i + 1 << ": " << d[i].name << endl;
+    cout << "\t" << SIZE + 1 << ": cancel\n";
+    cout << "\n\tChoice --> ";
+    cin >> choice;
+    if (choice == SIZE + 1)
+        return;
+    else
+    {
+        while (choice < 1 or choice > SIZE + 1)
+        {
+            cout << "\t> ERROR: 1-" << SIZE + 1 << " only: ";
+            cin >> choice;
+            if (choice == SIZE + 1)
+                return;
+        }
+        choice--;
+        cout << "\tEnter number of drinks to restock: ";
+        int amount;
+        cin >> amount;
+        while (amount < 1)
+        {
+            cout << "\t> ERROR: restock amount needs to be at least 1: ";
+            cin >> amount;
+        }
+        d[choice].onHand += amount;
+        cout << "\tNew on-hand amount for " << d[choice].name << ": " <<
+            d[choice].onHand << endl;
+    }
+}
+
+void purchaseDrink(array<Drink, SIZE> &d)
+{
+    //first check that the machine has drinks
+    bool noDrinks = true;
+    for (int i = 0; i < SIZE; i++)
+        if (d[i].onHand > 0)
+            noDrinks = false;
+    if (noDrinks)
+        cout << "\t> SORRY, this machine is sold out.\n";
+    else
+    {
+        cout << "Select drink to purchase:\n";
+        int choice;
+        for (int i = 0; i < SIZE; i++)
+            if (d[i].onHand > 0)
+                cout << "\t" << i + 1 << ": " << d[i].name << endl;
+        cout << "\t" << SIZE + 1 << ": cancel\n";
+        cout << "\n\tChoice --> ";
+        cin >> choice;
+        if (choice == SIZE + 1)
+            return;
+        else
+        {
+            while (choice < 1 or choice > (SIZE + 1) or d[choice - 1].onHand == 0)
+            {
+                cout << "\t> ERROR: only select drinks not sold out: ";
+                cin >> choice;
+                if (choice == SIZE + 1)
+                    return;
+            }
+            choice--; //corrects off-by-one error
+            d[choice].onHand--;
+            cout << "\tNew on-hand amount for " << d[choice].name << ": " <<
+                d[choice].onHand << endl << endl;
+        }
+    }
+}
+
+int showMenu()
+{
+    cout << "\nEnter:\n";
+    cout << "\t1 - Display inventory levels\n";
+    cout << "\t2 - Purchase drink\n";
+    cout << "\t3 - Restock\n";
+    cout << "\t4 - Quit\n\n";
+    cout << "\tChoice --> ";
+    int choice;
+    cin >> choice;
+    while (choice < 1 or choice > 4) {
+        cout << "\t> ERROR: 1-4 only --> ";
+        cin >> choice;
+    }
+    cout << endl;
+    return choice;
+}
+
+void displayInventory(array<Drink, SIZE> d)
+{
+    cout << fixed << setprecision(2);
+    cout << "\n************************\nSoda machine inventory:\n";
+    cout << "************************\n";
+    cout << setw(10) <<
+        setw(20) << left << "Drink" <<
+        setw(10) << "Cost" <<
+        setw(5) << "On Hand\n";
+    cout << setw(10) << right <<
+        setw(20) << left << "----------" <<
+        setw(10) << "----" <<
+        setw(5) << "-------\n";
+    for (int i = 0; i < SIZE; i++)
+        cout << setw(10) << right <<
+            setw(20) << left << d[i].name <<
+            setw(10) << d[i].cost <<
+            setw(4) << right << d[i].onHand << endl;
+    cout << endl << endl;
+}
+
+void bubbleSort(array<Drink, SIZE> &d)
+{
+    for (int maxElement = SIZE - 1; maxElement > 0; maxElement--)
+        for (int index = 0; index < maxElement; index++)
+            if (d[index].name > d[index + 1].name)
+                swap(d[index], d[index + 1]);
+}
+
+void swap(int & a, int & b)
+{
+    int temp = a;
+    a = b;
+    b = temp;
+}
+
