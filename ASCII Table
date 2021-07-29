@@ -40,3 +40,20 @@ Dec  Char                           Dec  Char     Dec  Char     Dec  Char
  29  GS  (group separator)           61  =         93  ]        125  }
  30  RS  (record separator)          62  >         94  ^        126  ~
  31  US  (unit separator)            63  ?         95  _        127  DEL
+
+
+#include <iostream>
+#include <iomanip>
+using namespace std;
+
+const int W1 = 4, W2 = 8;
+
+int main()
+{
+    cout << "***ASCII TABLE***\n\n";
+    cout << "Code\tChar\n----\t----\n";
+    for (int i = 33; i <= 126; i++)
+        cout << setw(W1) << i << setw(W2) << (char) i << endl;
+
+    return 0; 
+}
