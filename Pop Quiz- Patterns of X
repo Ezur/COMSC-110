@@ -1,0 +1,108 @@
+Using triple-nested for-loops, and a constant SIZE set to 3, generate this pattern in your console:
+
+X X X
+X X X
+X X X
+
+X X X
+X X X
+X X X
+
+X X X
+X X X
+X X X
+This generates 3 complete sets of a 3x3 pattern of X's. Note there's a space between each X.
+
+Extra Credit Option (5 pts)
+Rather than using a constant for size, ask the user for size. Use input validation to ensure this number is between 3-10.
+
+Also ask the user for what character they'd like to use for the pattern, and use that character in the pattern creation.
+
+
+
+#include <iostream>
+using namespace std;
+
+int main()
+{
+    char character = 'X';
+    int size = 3;
+
+    /* DRAW STRUCTURE */
+    for (int i = 0; i < size; i++)
+    {
+        for (int j = 0; j < size; j++)
+        {
+            for (int k = 0; k < size; k++)
+                cout << character << " ";
+            cout << endl;
+        }
+        cout << endl;
+    }
+}
+
+
+
+// EXTRA CREDIT SOLUTION
+
+#include <iostream>
+using namespace std;
+
+int main()
+{
+    /* USER INPUTS */
+    cout << "Enter the size of the shape: ";
+    int size;
+    cin >> size;
+    while (size < 1 or cin.fail())
+    {
+        if (cin.fail())
+        {
+            cin.clear();
+            cin.ignore(1000, '\n');
+        }
+        cout << "\t: ERROR: size must be at least 1: ";
+        cin >> size;
+    }
+    cout << "Default shape character is X. Change this? Y/N -> ";
+    char input;
+    cin >> input;
+    if (!cin.fail())
+        input = toupper(input);
+    while (cin.fail() or (input != 'Y' and input != 'N'))
+    {
+        if (cin.fail())
+        {
+            cin.clear();
+            cin.ignore(1000, '\n');
+        }
+        cout << "\tERROR: Y/N only: ";
+        cin >> input;
+        input = toupper(input);
+    }
+    char character = 'X';
+    if (input == 'Y')
+    {
+        cout << "New shape character --> ";
+        cin >> character;
+        while (cin.fail())
+        {
+            cin.clear();
+            cin.ignore(1000, '\n');
+            cout << "\tERROR: character only: ";
+            cin >> character;
+        }
+    }
+
+    /* DRAW STRUCTURE */
+    for (int i = 0; i < size; i++)
+    {
+        for (int j = 0; j < size; j++)
+        {
+            for (int k = 0; k < size; k++)
+                cout << character << " ";
+            cout << endl;
+        }
+        cout << endl;
+    }
+}
