@@ -1,0 +1,78 @@
+#include <iostream>
+#include <iomanip>
+using namespace std;
+
+void welcome();
+
+int main() 
+{
+    //declarations, welcome, instructions 
+    int random, guesses, overallSum = 0, userGuess, rounds = 0;
+    char again = 'N';
+    const int WIDTH = 28;
+    welcome();
+
+//get user input
+
+    do
+    {
+        //per game housekeeping
+        guesses = 1;
+        rounds++;
+        cout << fixed << setprecision(2);
+        
+        //generate random number 1-15
+        random = rand() % 15 + 1;
+        
+        cout << "\n***ROUND #" << rounds << "***\n";
+        cout << "I'm thinking of a number 1-15. Guess #" << guesses << ": ";
+        cin >> userGuess;
+        while (userGuess < 1 or userGuess > 15)
+        {
+            cout << "ERROR: 1-15 only please: ";
+            cin >> userGuess;
+        }
+        while (userGuess != random)
+        {
+            guesses++;
+            userGuess > random ? cout << "Too high. Guess #" << guesses << ": "
+            : cout << "Too low. Guess #" << guesses << ": ";
+            cin >> userGuess;
+        }
+        cout << "Correct! That took you " << guesses << " tries.\n";
+        overallSum += guesses; 
+            
+        //repeat program?
+        cout << "Would you like to run the game again? Y/N --> ";
+        cin >> again;
+        again = toupper(again);
+        while (again != 'Y' and again != 'N') 
+        {
+            cout << "ERROR: only Y/N please --> ";
+            cin >> again;
+            again = toupper(again);
+        }
+        
+    } while (again == 'Y');
+    
+    cout << "\n***********************************************\n";
+    cout << setw(WIDTH) << "Game summary:\n";
+    cout << setw(WIDTH) << "Rounds played:" << setw(8) << rounds << endl;
+    cout << setw(WIDTH) << "Average guesses per round:" << setw(8) << (float) overallSum / rounds << endl;
+
+
+return 0;
+}
+
+void welcome() 
+{
+    cout << "****************************************************************\n";
+    cout << "*************************GUESSING GAME**************************\n";
+    cout << "****************************************************************\n";
+    
+    cout << "I'll think of a number 1-15. You enter your guess, and I'll tell\n";
+    cout << "you if you're correct, too high, or too low. When you guess the\n";
+    cout << "number, I'll let you know how many guesses it took. You can play\n";
+    cout << "as many times as you like. When you quit, I'll let you know what\n";
+    cout << "your average number of guesses was across all game rounds.\n";
+}
