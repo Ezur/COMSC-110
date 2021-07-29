@@ -1,0 +1,20 @@
+#include <iostream>
+using namespace std;
+
+int doSomething(int *, int *);
+
+int main()
+{
+    int x = 5, y = 10;
+    cout << doSomething(&x, &y);
+
+    return 0;
+}
+
+int doSomething(int *a, int *b)
+{
+    int temp = *a;
+    *a = *b * 10;
+    *b = temp * 10;
+    return *a + *b;
+}
