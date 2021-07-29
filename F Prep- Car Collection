@@ -1,0 +1,108 @@
+#include <iostream>
+#include <array>
+#include <fstream>
+using namespace std;
+
+const int SIZE = 5; // number of cars in the input file
+
+struct Car
+{
+    string make_model;
+    int year;
+    int speed;
+};
+
+void read_file(array<Car, SIZE> &);
+void print_collection(array<Car, SIZE>);
+int menu();
+
+int main()
+{
+    array<Car, SIZE> collection;
+    read_file(collection);
+    cout << "Beginning car collection:\n";
+    print_collection(collection);
+
+    int input = menu(), choice;
+    while (input != 4)
+    {
+        switch (input)
+        {
+        case 1:
+            cout << "\n*SPEED UP*\nWhich car to speed up?\n";
+            print_collection(collection);
+            cout << "Choice: ";
+            cin >> choice;
+            while (choice < 1 or choice > SIZE)
+            {
+                cout << "\tERROR: 1-" << SIZE << " only: ";
+                cin >> choice;
+            }
+            collection[choice-1].speed += 5;
+            cout << "New speed: " << collection[choice-1].speed << endl;
+            break;
+        case 2:
+            cout << "\n*SLOW DOWN*\nWhich car to slow down?\n";
+            print_collection(collection);
+            cout << "Choice: ";
+            cin >> choice;
+            while (choice < 1 or choice > SIZE)
+            {
+                cout << "\tERROR: 1-" << SIZE << " only: ";
+                cin >> choice;
+            }
+            if (collection[choice-1].speed == 0)
+                cout << "\tERROR: can't slow down a car at rest.\n";
+            else
+            {
+                collection[choice-1].speed -= 5;
+                cout << "New speed: " << collection[choice-1].speed << endl;
+            }
+            break;
+        case 3:
+            cout << endl;
+            print_collection(collection);
+        }
+
+        input = menu();
+    }
+
+    return 0;
+}
+
+void read_file(array<Car, SIZE> &c)
+{
+    ifstream fin("car_data.txt");
+
+    for (int i = 0; i < SIZE; i++)
+    {
+        getline(fin, c[i].make_model);
+        fin >> c[i].year;
+        fin.ignore();
+        c[i].speed = 0;
+    }
+
+    fin.close();
+}
+
+void print_collection(array<Car, SIZE> c)
+{
+    for (int i = 0; i < SIZE; i++)
+        cout << "[" << i+1 << "] " << c[i].make_model
+             << " (" << c[i].year << ") Speed: " << c[i].speed << endl;
+}
+
+int menu()
+{
+    cout << "\n*MAIN MENU*\n[1] to speed up a car\n[2] to slow down a car\n";
+    cout << "[3] to output the car collection\n[4] to quit\n";
+    int choice;
+    cout << "Choice: ";
+    cin >> choice;
+    while (choice < 1 or choice > 4)
+    {
+        cout << "\tERROR: 1-4 only: ";
+        cin >> choice;
+    }
+    return choice;
+}
