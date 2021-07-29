@@ -1,0 +1,38 @@
+#include <iostream>
+#include <fstream>
+#include <array>
+using namespace std;
+
+const int SIZE = 5;
+
+int main()
+{
+    ifstream fin ("input.txt");
+	array<int, SIZE> values;
+
+	//read values from file into array
+	for (int i = 0; i < SIZE; i++)
+		fin >> values[i];
+	fin.close();
+
+	int sum = 0;
+	int min, max;
+	min = max = values[0];
+
+	for (int i = 0; i < SIZE; i++)
+	{
+		cout << values[i] << " ";
+		sum += values[i];
+		if (values[i] > max)
+			max = values[i];
+		if (values[i] < min)
+			min = values[i];
+	}
+
+	cout << "\n\nSum: " << sum << endl;
+	cout << "Avg: " << sum / (double) SIZE << endl;
+	cout << "Min: " << min << endl;
+	cout << "Max: " << max << endl;
+
+    return 0;
+}
