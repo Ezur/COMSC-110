@@ -1,0 +1,29 @@
+#include <iostream>
+#include <iomanip>
+#include <string>
+#include <vector>
+using namespace std;
+
+int main()
+{
+    cout << "Enter anything and I'll do two things:\n\t[1] Return everything up to the first ";
+    cout << "punctuation mark; and \n\t[2] Return the input in all lowercase: \n";
+    cout << "\nPlease enter your input: ";
+    string input, tempStr = "";
+    int index = 0;
+
+    getline(cin, input);
+    cout << "All characters up to the first punctuation mark:\n\t";
+    while (!ispunct(input[index]))
+        tempStr += input[index++];
+    cout << tempStr << endl << endl;
+
+    cout << "Input all converted to lowercase: ";
+    string converted = "";
+    for (unsigned i = 0; i < input.size(); i++)
+        converted += tolower(input[i]);
+    cout << converted << endl << endl;
+
+
+    return 0;
+}
