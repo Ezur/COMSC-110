@@ -1,0 +1,22 @@
+#include <iostream>
+using namespace std;
+
+int getOdd();
+const int MIN = 10, MAX = 99;
+
+int main()
+{
+    srand(time(0));
+    for (int i = 0; i < 10; i++)
+        cout << getOdd() << " ";
+
+    return 0;
+}
+
+int getOdd()
+{
+	int value = rand() % (MAX - MIN) + MIN;
+	while (value % 2 == 0)
+		value = rand() % (MAX - MIN) + MIN;
+	return value;
+}
