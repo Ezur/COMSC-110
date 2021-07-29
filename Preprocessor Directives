@@ -1,0 +1,9 @@
+<iostream>       // for cin and cout
+<iomanip>        // for output formatting
+<cmath>          // for advanced math such as pow(a, b), sin, cos, etc.
+<ctime>          // for generating random numbers using the system time as the seed
+<cstdlib>        // for advanced functions such as rand() for random numbers, exit function
+<fstream>        // for external file operations
+<string>         // for working with variables/arrays of type string
+<random>         // for functions with random numbers
+<vector>         // for vector operations
