@@ -1,0 +1,25 @@
+#include <iostream>
+#include <fstream>
+using namespace std;
+
+int main()
+{
+    //housekeeping
+	string filename;
+	cout << "Enter filename for output, ending in .txt: ";
+	getline(cin, filename);
+	ofstream fout(filename);
+
+	srand(time(0));
+	for (int i = 0; i < 100; i++)
+	{
+		int value = rand() % 1000;
+		fout << value << endl;
+		cout << value << endl;
+	}
+	fout.close();
+
+    return 0;
+}
+
+
