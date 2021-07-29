@@ -1,0 +1,43 @@
+#include <iostream>
+using namespace std;
+
+void enterArrayData(double *);
+void outputArrayData(double *);
+int sumArray(double *);
+const int SIZE = 5;
+
+int main()
+{
+    double values[SIZE];
+    enterArrayData(values);
+    cout << "Outputting array elements: ";
+    outputArrayData(values);
+    cout << "Sum of values: " << sumArray(values) << endl;
+    return 0;
+}
+
+void enterArrayData(double *arr)
+{
+    cout << "Data entry for the array:\n";
+    for (int i = 0; i < SIZE; i++)
+    {
+        cout << "\t> Element #" << i << ": ";
+        cin >> *arr++;
+    }
+    cout << "Data entry complete.\n";
+}
+
+void outputArrayData(double *arr)
+{
+    for (int i = 0; i < SIZE; i++)
+        cout << *arr++ << " ";
+    cout << endl;
+}
+
+int sumArray(double *arr)
+{
+    double sum = 0.0;
+    for (int i = 0; i < SIZE; i++)
+        sum += *arr++;
+    return sum;
+}
