@@ -1,0 +1,53 @@
+#include <iostream>
+#include <fstream>
+#include <array>
+using namespace std;
+
+const int ASIZE = 10;
+
+int main()
+{
+    array<string, ASIZE> movies;
+    ifstream fin("input.txt");
+    if (!fin)
+    {
+        cout << "File error";
+        return 1;
+    }
+    int index = 0;
+
+    /* note the options below are different ways of using loops to read the
+     *  file contents directly into an array. Remove comment blocks to get
+     *  that code block to execute. */
+
+    /* option 1: using while with getline */
+
+    string line;
+    while (getline(fin, line))
+        movies[index++] = line;
+
+
+    /* option 2: using while with getline, second version */
+    /*
+    string line;
+    while (getline(fin, line))
+    {
+        movies[index] = line;
+        index++;
+    }
+    */
+
+    /* option 3: using a for loop */
+    /*
+    for (int i = 0; i < ASIZE; i++)
+        getline(fin, movies[i]);
+    */
+
+    fin.close();  // close the file before continuing
+
+    /*  output section  */
+    for (int i = 0; i < ASIZE; i++)
+        cout << movies[i] << endl;
+
+    return 0;
+}
