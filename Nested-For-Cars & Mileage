@@ -1,0 +1,39 @@
+#include <iostream>
+using namespace std;
+
+const int CARS = 3,
+    	  ENTRIES = 3;
+
+int main()
+{
+	double entry, sum = 0, overall = 0;
+
+	for (int c = 1; c <= CARS; c++)
+	{
+		sum = 0;
+		cout << "DATA ENTRY FOR CAR #" << c << ":\n";
+		for (int e = 1; e <= ENTRIES; e++)
+		{
+			cout << "\tEnter mileage #" << e << ": ";
+			cin >> entry;
+			while (entry < 0 or cin.fail())
+			{
+				if (cin.fail())
+				{
+					cin.clear();
+					cin.ignore(1000, '\n');
+				}
+				cout << "\t\tERROR: mileage must be 0 or greater: ";
+				cin >> entry;
+			}
+			sum += entry;
+			overall += entry;
+		}
+		cout << "\tSum: " << sum << endl;
+		cout << "\tAvg: " << sum / ENTRIES << endl;
+	}
+	cout << "\nOverall sum: " << overall << endl;
+	cout << "Overall avg: " << overall / (ENTRIES * CARS) << endl;
+
+	return 0;
+}
