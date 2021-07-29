@@ -1,0 +1,12 @@
+When to use cin.ignore()
+Please remember these idiosyncrasies between cin and getline(). If there's a leading newline in the keyboard buffer:
+
+cin will consume the leading newline, then read the rest of the buffer, and leave a new trailing newline remaining.
+getline() will consume the leading newline, but not read anything else in the buffer, believing that the console input is complete.
+This means, whenever the sequence of instructions is in this order (there can be other instructions involved, but the order of these two matters):
+
+cin
+getline()
+...then we need a cin.ignore() statement anywhere between these two statements.
+This cin.ignore() statement flushes the keyboard buffer of a single character, which for us just happens to be the first character in the buffer,
+the newline character.
