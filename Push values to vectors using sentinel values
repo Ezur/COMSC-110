@@ -1,0 +1,23 @@
+#include <iostream>
+#include <vector>
+using namespace std;
+
+int main()
+{
+    vector<int> parts;
+    int partNr;
+
+	cout << "Enter partNr or -99 to quit: ";
+	cin >> partNr;
+	while (partNr != -99)
+	{
+		parts.push_back(partNr);
+		cout << "Enter partNr or -99 to quit: ";
+		cin >> partNr;
+	}
+	for (auto val : parts) 
+        cout << val << " ";
+	cout << endl;
+
+	return 0;
+}
