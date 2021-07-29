@@ -1,0 +1,40 @@
+// This program will require your skills with:
+
+// Using an integer array to store some values we need
+// Using nested for-loops to generate some cool output
+
+//Timed Program 10 Solution - Mountain Scene
+#include <iostream>
+#include <array>
+using namespace std;
+
+const int SIZE = 3;
+void print_row(int);
+
+int main()
+{
+    array<int, SIZE> heights = {3, 6, 4};  // holds 3 mountain heights
+    
+    for (int i = 0; i < SIZE; i++)  // output each mountain
+    {
+        int hgt = heights[i]; // retrieve current mountain height
+        
+        //print ascending portion
+        for (int j = 1; j <= hgt; j++)
+            print_row(j);
+        
+        //print descending portion
+        for (int j = hgt - 1; j >= 1; j--)
+            print_row(j);
+    }
+    return 0;
+}
+
+// print_row(): outputs a single row of asterisks
+// Inputs: n (int), num to print | Returns: void
+void print_row(int n)
+{
+    for (int i = 1; i <= n; i++)
+        cout << "* ";
+    cout << endl;
+}
