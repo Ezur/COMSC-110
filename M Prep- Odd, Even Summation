@@ -1,0 +1,69 @@
+#include <iostream>
+#include <fstream>
+using namespace std;
+ 
+int main() {
+ 
+    // declarations, housekeeping, introduction
+    int userChoice;
+    char evenOdd, keepgoing;
+    ofstream outputFile;
+    outputFile.open("output.txt");
+    cout << "*** ODD/EVEN SUMMATION PROGRAM ***\n";
+    cout << "Enter a number 100-200, and then tell me if you'd like to\n";
+    cout << "sum up even or odd numbers between 0 and your number.\n\n";
+ 
+    // outer do-while loop to repeat the program until user desires to quit
+    do
+    {
+        // user input and validation
+        cout << "Enter an integer 100-200 please --> ";
+        cin >> userChoice;
+        while (userChoice < 100 or userChoice > 200)
+        {
+            cout << "ERROR: only integers 100-200 please: ";
+            cin >> userChoice;
+        }
+       
+        cout << "Would you like to sum (E)ven or (O)dd numbers? ";
+        cin >> evenOdd;
+        while (evenOdd != 'E' and evenOdd != 'O')
+        {
+            cout << "ERROR: E or O only please: ";
+            cin >> evenOdd;
+        }
+       
+        // code for the cases of Odd or Even selection
+        int sum = 0;
+        switch (evenOdd)
+        {
+            case 'E':   for (int i = 1; i <= userChoice; i++)
+                            sum = (i % 2 == 0) ? sum + i : sum;
+                        break;
+            case 'O':   for (int i = 1; i <= userChoice; i++)
+                            sum = (i % 2 == 1) ? sum + i : sum;
+                        break;
+        };
+       
+        // output, prompts w/validation to continue
+        cout << "**** PROGRAM RESULTS ****\n";
+        outputFile << "**** PROGRAM RESULTS ****\n";
+        cout << "You chose to sum ";
+        outputFile << "You chose to sum ";
+        evenOdd == 'E' ? cout << "even " : cout << "odd ";
+        evenOdd == 'E' ? outputFile << "even " : outputFile << "odd ";
+        cout << "numbers between 100 and " << userChoice << ".\n";
+        outputFile << "numbers between 100 and " << userChoice << ".\n";
+        cout << "Your sum is: " << sum << endl << endl;
+        outputFile << "Your sum is: " << sum << endl << endl;
+        cout << "Go again? Y/N: ";
+        cin >> keepgoing;
+        while (keepgoing != 'Y' and keepgoing != 'y' and keepgoing != 'N' and keepgoing != 'n')
+        {
+            cout << "ERROR: Y or N only --> ";
+            cin >> keepgoing;
+        }
+    } while (keepgoing == 'y' or keepgoing == 'Y');
+ 
+    return 0;
+}
