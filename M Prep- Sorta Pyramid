@@ -1,0 +1,53 @@
+#include <iostream>
+#include <ctime>
+#include <cstdlib>
+using namespace std;
+ 
+int main() {
+ 
+    // welcome, declarations
+    char keepgoing;
+    cout << "*** SORTA PYRAMID PROGRAM ***\n";
+    cout << "This program will output a sideways asterisk pyramid of a\n";
+    cout << "height of your choosing.\n\n";
+ 
+    // outer loop to repeat the program if desired
+    do
+    {
+        // user input and validation
+        cout << "How tall of a pyramid do you want? Enter 5-25 only: ";
+        int userChoice;
+        cin >> userChoice;
+        while (userChoice < 5 or userChoice > 25)
+        {
+            cout << "ERROR: 5-25 only. Reenter: ";
+            cin >> userChoice;
+        }
+       
+        // output the pyramid
+        for (int i = 1; i <= userChoice; i++)
+        {
+            for (int j = 1; j <= i; j++)
+                cout << "*";
+            cout << endl;
+        }
+        for (int i = userChoice - 1; i >= 1; i--)
+        {
+            for (int j = 1; j <= i; j++)
+                cout << "*";
+            cout << endl;
+        }
+       
+        // user choice to continue or not
+        cout << "Again? Y/N: ";
+        cin >> keepgoing;
+        while (keepgoing != 'Y' and keepgoing != 'N' and keepgoing != 'y' and keepgoing != 'n')
+        {
+            cout << "ERROR: Y or N only --> ";
+            cin >> keepgoing;
+        }
+       
+    } while (keepgoing == 'Y' or keepgoing == 'y');
+   
+    return 0;
+}
