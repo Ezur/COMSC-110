@@ -1,0 +1,235 @@
+//*****************
+//Program Name: SP21 COMSC-110 Mid-Term Exam
+//Author: Prof Dietrich
+//IDE Used: Eclipse
+//Program description: generates a user-customized table of randoms
+//*****************
+#include <iostream>
+#include <iomanip>
+#include <fstream>
+using namespace std;
+
+//global constants and function prototypes
+const int MINR1 = 0, MAXR1 = 10000,
+          MINR2 = 1, MAXR2 = 99999;
+bool getYN();
+int getInt(int, int);
+int getOEB();
+int getMaxR(int);
+void showOutput(int, int, int, int, int, bool, bool, bool, 
+                bool, int, bool);
+ofstream fout;
+
+int main()
+{
+    //declarations and housekeeping
+    srand(time(0));
+    int rows, cols, minR, maxR;
+    bool oddEven, again = true, showSum = false, showAvg = false,
+         showSmallest = false, showLargest = false, 
+         output_to_file = false;
+
+    do //outer loop to repeat the program if the user desires
+    {
+        //welcome
+        cout << "This program will output a customized table of random "
+             << "numbers.\n";
+
+        //INPUT SECTION **************************************************
+        cout << "How many columns do you want (1-15)? ";
+        cols = getInt(1, 15); //user choice for columns
+
+        cout << "How many rows do you want (1-15)? ";
+        rows = getInt(1, 15); //user choice for rows
+
+        cout << "Do you want (O)dd, (E)ven, or (B)oth types of numbers? ";
+        oddEven = getOEB();  //returns 0:evens  1:odds  2:both
+
+        cout << "What is your minimum random number desired (between"
+             << MINR1 << " - " << MAXR1 << "): ";
+        minR = getInt(0, 10000);  //user choice for min rand desired
+        maxR = getMaxR(minR);     //user choice for max rand desired
+
+        cout << "Display the sum of the random numbers in the table "
+             << "(Y/N)? ";
+        showSum = getYN(); //user choice for displaying sum
+
+        cout << "Display the average of the random numbers in the "
+             << "table (Y/N)? ";
+        showAvg = getYN(); //user choice for displaying average
+
+        cout << "Display the largest random number generated in the "
+             << "table (Y/N)? ";
+        showLargest = getYN(); //user choice for displaying largest
+
+        cout << "Display the smallest random numbers generated in the "
+             << "table (Y/N)? ";
+        showSmallest = getYN(); //user choice for displaying smallest
+
+        cout << "Output to a file in addition to the console (Y/N)? ";
+        output_to_file = getYN(); //user choice for output to file
+        if (output_to_file)
+        {
+            string filename;
+            cout << "\t> Desired filename, ending in .txt: ";
+            cin.ignore();
+            getline(cin, filename);
+            fout.open(filename);
+        }
+
+        //extra credit section: dynamic field width
+        //obtain number of digits in maxR
+        int W1 = 0, n = maxR; //n is temp var,
+                              //W1 counts digits for field width
+        while (n != 0)
+        {
+            n /= 10;
+            W1++;
+        }
+        W1 += 2; //add a 2-space buffer between table columns
+
+        //OUTPUT SECTION ****************************************
+        showOutput(cols, rows, oddEven, minR, maxR, showSum, showAvg,
+                   showLargest, showSmallest, W1, output_to_file);
+
+        //closing and repetition tasks
+        if (output_to_file)
+            fout.close();
+        cout << "\nRepeat the program? Y/N --> ";
+        again = getYN();
+    } while (again);
+
+    //housekeeping
+    return 0;
+}
+
+//showOutput(): outputs the table of randoms and the statistics summary
+//Inputs: all user settings for the table | Returns: void
+//int parameter oe: 0:evens, 1:odds, 2:both
+void showOutput(int c, int r, int oe, int min, int max, bool sSum, bool sAvg,
+                bool sLargest, bool sSmallest, int w1, bool to_file)
+{
+    int randNr, sum = 0, smallest, largest;
+    cout << "\n\nRandom number table:\n\n";
+    if (to_file) fout << "\n\nRandom number table:\n\n";
+    for (int i = 1; i <= r; i++)
+    {
+        for (int j = 1; j <= c; j++)
+        {
+            randNr = rand() % (max - min + 1) + min;
+            if (i == 1 and j == 1) smallest = largest = randNr;
+            if (oe != 2) //user elected either 0:evens or 1:odds
+                while (randNr % 2 != oe) //generate appropriate random
+                    randNr = rand() % (max - min + 1) + min;
+            cout << setw(w1) << randNr;
+            if (to_file) fout << setw(w1) << randNr;
+            sum += randNr;
+            if (randNr < smallest) smallest = randNr;
+            if (randNr > largest) largest = randNr;
+        }
+        cout << endl;
+        if (to_file) fout << endl;
+    }
+
+    //outputs the various statistics, per the user's choices
+    if (sSum or sAvg or sLargest or sSmallest)
+        cout << "\n\nTable statistics: \n";
+    if (sSum)
+        cout << "\t> Sum: " << sum << endl;
+    cout << fixed << setprecision(2);
+    if (sAvg)
+        cout << "\t> Average: " << sum / (float)(r * c) << endl;
+    if (sLargest)
+        cout << "\t> Largest: " << largest << endl;
+    if (sLargest)
+        cout << "\t> Smallest: " << smallest << endl;
+
+    //extra credit portion to output to file
+    if ((sSum or sAvg or sLargest or sSmallest) and to_file)
+        fout << "\n\nTable statistics: \n";
+    if (sSum and to_file)
+        fout << "\t> Sum: " << sum << endl;
+    if (to_file)
+        fout << fixed << setprecision(2);
+    if (sAvg and to_file)
+        fout << "\t> Average: " << sum / (float)(r * c) << endl;
+    if (sLargest and to_file)
+        fout << "\t> Largest: " << largest << endl;
+    if (sLargest and to_file)
+        fout << "\t> Smallest: " << smallest << endl;
+}
+
+//getYN(): validates a user's Y/N input
+//Inputs: none | Returns: bool: true = yes, false = no
+bool getYN()
+{
+    char yesNo;
+    cin >> yesNo;
+    yesNo = toupper(yesNo);
+    while (yesNo != 'N' and yesNo != 'Y')
+    {
+        cout << "\t\t> ERROR: Y/N only: ";
+        cin >> yesNo;
+        yesNo = toupper(yesNo);
+    }
+    return yesNo == 'Y';
+}
+
+//getInt(): validates a user's input between min and max (provided)
+//Inputs: min and max (ints) | Returns: validated int between min and max
+int getInt(int min, int max)
+{
+    int value;
+    cin >> value;
+    while ( value < min or value > max)
+    {
+        cout << "\t\t> ERROR: " << min << "-" << max << " only: ";
+        cin >> value;
+    }
+    return value;
+}
+
+//getOEB(): validates a user's choice of odd, even, or both
+//Inputs: none | Returns: int, 0:evens, 1:odds, 2:both
+int getOEB()
+{
+    char entry;
+    cin >> entry;
+    entry = toupper(entry);
+    while (entry != 'O' and entry != 'E' and entry != 'B')
+    {
+        cout << "\t\t> ERROR: O, E, or B only: ";
+        cin >> entry;
+        entry = toupper(entry);
+    }
+    if (entry == 'E')
+        return 0;
+    else if (entry == 'O')
+        return 1;
+    else
+        return 2;
+}
+
+//getMaxR(): validates a user's choice of max rand desired, given min rand
+//Inputs: min rand (int) | Returns: max rand that is both greater than min
+//                         rand and less than the max allowable rand
+int getMaxR(int minR)
+{
+    int maxR;
+    cout << "What is your maximum random number desired (" << MINR2
+         << " - " << MAXR2 << ") and must\n";
+    cout << "be greater than your minimum random number desired) ("
+         << minR << "): ";
+    cin >> maxR;
+    while (maxR < MINR2 or maxR > MAXR2 or maxR <= minR)
+    {
+        if (maxR < MINR2 or maxR > MAXR2)
+            cout << "\t> ERROR: " << MINR1 << " - " << MAXR2
+                 << " only: ";
+        else
+            cout << "\t> ERROR: max must be greater than min ("
+                 << minR << "): ";
+        cin >> maxR;
+    }
+    return maxR;
+}
