@@ -1,0 +1,54 @@
+//this program uses a function to return a structure.
+#include <iostream>
+#include <iomanip>
+#include <cmath>  // For the pow function
+#include <fstream>
+using namespace std;
+
+const double PI = 3.14159;
+const int SIZE = 3;
+
+struct Circle
+{
+   double radius;      // A circle's radius
+   double diameter;    // A circle's diameter
+   double area;        // A circle's area
+};
+
+Circle getInfo(ifstream &);
+
+int main()
+{
+   Circle circles[SIZE];      // Define a structure variable
+   ifstream fin("input.txt");
+
+   for (int i = 0; i < SIZE; i++)
+   {
+       circles[i] = getInfo(fin);
+       circles[i].area = PI * pow(circles[i].radius, 2.0);
+       cout << "The radius and area of the circle are:\n";
+       cout << fixed << setprecision(2);
+       cout << "Radius: " << circles[i].radius << endl;
+       cout << "Area: " << circles[i].area << endl;
+   }
+
+   fin.close();
+   return 0;
+}
+
+Circle getInfo(ifstream &fin)
+{
+   Circle tempCircle;  // Temporary structure variable
+
+   cout << "Obtaining the diameter of a circle:\n";
+   fin >> tempCircle.diameter;
+   tempCircle.radius = tempCircle.diameter / 2.0;
+
+   return tempCircle;
+}
+
+/* input.txt file:
+42
+53
+92
+*/
