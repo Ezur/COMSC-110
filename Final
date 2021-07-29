@@ -1,0 +1,90 @@
+#include <iostream>
+#include <iomanip>
+#include <fstream>
+#include <array>
+#include <cmath>
+using namespace std;
+
+struct Letter
+{
+    char actualLetter;
+    int count;
+};
+
+const int SIZE = 26;
+void printCounts(array<Letter, SIZE>, int, int, int);
+void bubbleSort(array<Letter, SIZE> &);
+void swap(int &, int &);
+
+int main()
+{
+    //declarations
+    array<Letter, SIZE> letters;  //a 26-element array of struct Letter
+
+    //initialize array
+    for (int i = 0; i < SIZE; i++)
+    {
+        letters[i].actualLetter = (char) i + 65;
+        letters[i].count = 0;
+    }
+
+    ifstream inputFile;
+    inputFile.open("story2.txt");
+    if (!inputFile)
+    {
+        cout << "Error opening input file.\n";
+        return 1;
+    }
+    char ch;
+    int upperCount = 0, lowerCount = 0, punctCount = 0;
+    while (inputFile >> ch)
+    {
+        for (int i = 0; i < SIZE; i++)
+            if (toupper(ch) == letters[i].actualLetter)
+                letters[i].count++;
+        if (isupper(ch))
+            upperCount++;
+        if (islower(ch))
+            lowerCount++;
+        if (ispunct(ch))
+            punctCount++;
+    }
+    inputFile.close();
+
+    bubbleSort(letters);
+    printCounts(letters, upperCount, lowerCount, punctCount);
+
+    return 0;
+}
+
+void printCounts (array<Letter, SIZE> ltrs, int upper, int lower, int punct)
+{
+    int width = log10(ltrs[0].count) + 1;
+    cout << "Most frequent letter counts:\n";
+    for (int i = 0; i < 26; i++)
+        cout << right << setw(5) << ltrs[i].actualLetter
+             << ": " << setw(width) << ltrs[i].count << endl;
+    cout << endl;
+    width = log10(lower) + 1;
+    cout << right << setw(35) << "Number of uppercase letters: " << setw(width) << upper << endl;
+    cout << right << setw(35) << "Number of lowercase letters: " << setw(width) << lower << endl;
+    cout << right << setw(35) << "Number of punctuation characters: " << setw(width) << punct << endl;
+}
+
+void bubbleSort(array<Letter, SIZE> &ltrs)
+{
+    for (int maxElement = SIZE - 1; maxElement > 0; maxElement--)
+        for (int index = 0; index < maxElement; index++)
+            if (ltrs[index].count < ltrs[index + 1].count)
+            {
+                swap(ltrs[index].count, ltrs[index + 1].count);
+                swap(ltrs[index].actualLetter, ltrs[index + 1].actualLetter);
+            }
+}
+
+void swap(int &a, int &b)
+{
+    int temp = a;
+    a = b;
+    b = temp;
+}
