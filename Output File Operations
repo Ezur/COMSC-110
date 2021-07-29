@@ -23,3 +23,39 @@ int main()
 }
 
 
+
+
+
+
+
+#include <iostream>
+#include <iomanip>
+#include <fstream>
+using namespace std;
+
+int main() 
+{
+    ifstream infile;
+    ofstream outfile;
+    string address, filename;
+    infile.open("addresses.txt");
+    outfile.open("myOutput.txt");
+    if (!infile) {
+        cout << "***ERROR opening file. Check and run again.\n";
+        return 100;
+    }
+    while (getline(infile, address))
+    {
+        outfile << address << endl;
+        
+        getline(infile, address);
+        outfile << address << endl;
+
+        getline(infile, address);
+        outfile << address << endl << endl;
+    }
+    cout << "Conversion complete.\n";
+    outfile.close();
+    infile.close();
+    return 0;
+}
