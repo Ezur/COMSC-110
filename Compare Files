@@ -1,0 +1,49 @@
+#include <iostream>
+#include <array>
+using namespace std;
+
+const int SIZE = 5;
+bool compareArrays(array<int, SIZE>, array<int, SIZE>);
+
+int main()
+{
+    array<int, SIZE> array1 = {2, 4, 6, 8, 10};
+    array<int, SIZE> array2 = {1, 3, 5, 7, 9};
+    array<int, SIZE> array3 = {2, 4, 6, 8, 10};
+
+    cout << "Array1: ";
+    for (auto val : array1) cout << val << " ";
+    cout << endl;
+    cout << "Array2: ";
+    for (auto val : array2) cout << val << " ";
+    cout << endl;
+    cout << "Array3: ";
+    for (auto val : array3) cout << val << " ";
+    cout << endl << endl;
+
+
+    cout << "Comparing array1 and array2: ";
+    if (compareArrays(array1, array2))
+        cout << "same\n";
+    else
+        cout << "different\n";
+
+    cout << "Comparing array1 and array3: ";
+    if (compareArrays(array1, array3))
+        cout << "same\n";
+    else
+        cout << "different\n";
+    cout << "Comparing array2 and array3: ";
+
+    if (compareArrays(array2, array3))
+        cout << "same\n";
+    else
+        cout << "different\n";
+
+    return 0;
+}
+
+bool compareArrays(array<int, SIZE> a1, array<int, SIZE> a2)
+{
+    return a1 == a2;
+}
