@@ -1,0 +1,33 @@
+#include <iostream>
+using namespace std;
+
+const int MAX = 99, MIN = 50;
+const int LOOPTIMES = 100;
+
+int main()
+{
+	srand(time(0));
+	int sum = 0;  //accumulator variable
+	int high = 0;
+	int low = 0;
+
+	for (int i = 0; i < LOOPTIMES; i++)
+	{
+		int rando = rand() % (MAX - MIN + 1) + MIN;
+		cout << rando << " ";
+		if ( (i + 1) % 10 == 0) cout << endl;
+		sum += rando;
+		if (i == 0) high = low = rando;
+		else
+		{
+			if (rando > high) high = rando;
+			if (rando < low) low = rando;
+		}
+	}
+	cout << endl << endl;
+	cout << "Sum: " << sum << endl;
+	cout << "Lowest: " << low << endl;
+	cout << "Highest: " << high << endl;
+
+	return 0;
+}
