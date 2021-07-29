@@ -1,0 +1,28 @@
+#include <iostream>
+#include <array>
+using namespace std;
+
+const int SIZE = 10;
+void doubleElements(array<int, SIZE> &);
+
+int main()
+{
+    array<int, SIZE> numbers = {14, 62, 87, 18, 43, 86, 27, 31, 50, 63};
+
+    cout << "Original array: ";
+    for (int val : numbers) cout << val << " ";
+    cout << endl;
+
+    doubleElements(numbers);
+
+    cout << "Doubled array: ";
+    for (int val : numbers) cout << val << " ";
+
+    return 0;
+}
+
+void doubleElements(array<int, SIZE> &a)
+{
+    for (int i = 0; i < SIZE; i++)
+        a[i] *= 2;
+}
