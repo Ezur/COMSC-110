@@ -1,0 +1,41 @@
+#include <iostream>
+#include <fstream>
+#include <array>
+using namespace std;
+
+const int SIZE = 10;
+
+void double_array(array<int, SIZE> &);
+
+int main()
+{
+    ifstream fin("input.txt");
+	int i = 0;
+	array<int, SIZE> numbers;
+
+	while (fin >> numbers[i++]);
+	fin.close();
+
+	cout << "Original array:\n";
+	for (int val : numbers)
+		cout << val << " ";
+	cout << endl;
+
+	double_array(numbers);
+
+	cout << "Doubled array:\n";
+	for (int val : numbers)
+		cout << val << " ";
+
+	return 0;
+}
+
+void double_array(array<int, SIZE> &arr)
+{
+	for (int i = 0; i < SIZE; i++)
+	{
+		arr[i] *= 2;
+	}
+	cout << endl;
+
+}
