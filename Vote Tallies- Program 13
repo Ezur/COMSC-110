@@ -1,0 +1,96 @@
+#include <iostream>
+#include <iomanip>
+using namespace std;
+
+void sort(int*, int);
+double average(int*, int);
+
+int main()
+{
+    int pollingLocations = 0; //holds number of polling locations
+    int *voteCount = nullptr; //points to an array
+    double avgVotes = 0;      //votes average
+
+    cout << "\nHow many polling places do you have? ";
+    cin >> pollingLocations;
+    while (pollingLocations < 0)
+    {
+        cout << "\t> ERROR: entry can't be negative. Reenter: ";
+        cin >> pollingLocations;
+    }
+
+    //allocate an array to hold the votes
+    voteCount = new int[pollingLocations];
+
+    //populate array with vote tallies
+    for (int i = 0; i < pollingLocations; i++)
+    {
+        //enter vote tally
+        cout << "Enter vote tally for polling location #"
+             << (i + 1) << ": ";
+        cin >> *(voteCount + i);
+        while (*(voteCount + i) < 0)
+        {
+            cout << "\t> ERROR: must be a positive number: ";
+            cin >> *(voteCount + i);
+        }
+    }
+
+    //sort the vote tallies
+    sort(voteCount, pollingLocations);
+
+    //obtain average vote tally
+    avgVotes = average(voteCount, pollingLocations);
+
+    //display the sorted data
+    cout << "\nVote tallies in ascending order, and average:\n\n";
+    cout << " Votes" << endl;
+    cout << " -----";
+
+    for (int j = 0; j < pollingLocations; j++)
+    {
+        cout << "\n" << fixed << setprecision(2)
+             << setw(6) << *(voteCount + j);
+    }
+
+    cout << fixed << setprecision(2);
+    cout << "\n\nAverage vote tally: " << avgVotes;
+
+    //free the dynamically-allocated memory
+    delete [] voteCount;
+    voteCount = nullptr;
+
+    return 0;
+}
+
+void sort(int* votes, int numPolls)
+{
+    int minIndex;
+    int minValue;
+
+    for (int i = 0; i < (numPolls - 1); i++)
+    {
+        minIndex = i;
+        minValue = *(votes + i);
+
+        for(int index = i + 1; index < numPolls; index++)
+        {
+            if (*(votes + index) < minValue)
+            {
+                minValue = *(votes + index);
+                minIndex = index;
+            }
+        }
+
+        *(votes + minIndex) = *(votes + i);
+        *(votes + i) = minValue;
+    }
+}
+
+double average(int* score, int numPolls)
+{
+    int total = 0; // Accumulator
+    for (int k = 0; k < numPolls; k++)
+        total += *(score + k);
+    return (float) total / numPolls;
+}
