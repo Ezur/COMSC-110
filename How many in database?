@@ -1,0 +1,38 @@
+#include <iostream>
+#include <fstream>
+using namespace std;
+
+int main()
+{
+    ifstream fin("numbers.txt");
+    int count = 0, value;
+
+    /*  first part: count the elements in the file  */
+    while (fin >> value) count++;
+    fin.close();
+
+    /*  second part: create array of that size  */
+    int numbers[count];
+
+    /*  third part: reopen file, read into array  */
+    fin.open("numbers.txt");
+    for (int i = 0; i < count; i++)
+        fin >> numbers[i];
+    fin.close();
+
+    /*  fourth part: process array, calc min/max  */
+    int min, max;
+    for (int i = 0; i < count; i++)
+    {
+        if (i == 0) min = max = numbers[i];
+        else
+        {
+            if (numbers[i] < min) min = numbers[i];
+            if (numbers[i] > max) max = numbers[i];
+        }
+    }
+    cout << "Max value: " << max << endl;
+    cout << "Min value: " << min << endl;
+
+    return 0;
+}
