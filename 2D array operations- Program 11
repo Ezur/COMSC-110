@@ -1,0 +1,160 @@
+#include <iostream>
+#include <iomanip>
+#include <random>
+#include <ctime>
+using namespace std;
+
+const int ROWS = 10, COLS = 10, MAXRAND = 1000;
+
+void populateArray(int[][COLS]);
+void printArray(int[][COLS]);
+void addArrays(int[][COLS], int[][COLS], int[][COLS]);
+int get_max(int[][COLS]);
+int get_min(int[][COLS]);
+int get_sum(int[][COLS]);
+void print_row_sums(int[][COLS]);
+void print_column_sums(int[][COLS]);
+
+int main() {
+
+    // declarations and initializations
+    srand(time(0));
+    int array1[ROWS][COLS], array2[ROWS][COLS];
+    populateArray(array1);
+    populateArray(array2);
+
+    // create array3 and initialize to 0's
+    int array3[ROWS][COLS] = {0};
+
+    // add array1 and array2 and store into array3
+    addArrays(array1, array2, array3);
+    cout << "Array1:\n";
+    printArray(array1);
+    cout << "Array2:\n";
+    printArray(array2);
+    cout << "Array3, the matrix sum of Array1 and Array2:\n";
+    printArray(array3);
+
+    // perform analysis on each of the three arrays:
+    //   max, min, sum, average, sum of rows, sum of columns
+    cout << "/* ARRAY 1 ANALYSIS: */\n";
+    cout << "\tMax value: " << get_max(array1) << endl;
+    cout << "\tMin value: " << get_min(array1) << endl;
+    int sum = get_sum(array1);
+    cout << "\tSum: " << sum << endl;
+    cout << "\tAverage: " << fixed << setprecision(2)
+         << sum / float(ROWS*COLS) << endl;
+    cout << "\tSum of rows:\n";
+    print_row_sums(array1);
+    cout << "\tSum of columns:\n";
+    print_column_sums(array1);
+    cout << endl;
+
+    cout << "/* ARRAY 2 ANALYSIS: */\n";
+    cout << "\tMax value: " << get_max(array2) << endl;
+    cout << "\tMin value: " << get_min(array2) << endl;
+    sum = get_sum(array2);
+    cout << "\tSum: " << sum << endl;
+    cout << "\tAverage: " << fixed << setprecision(2)
+         << sum / float(ROWS*COLS) << endl;
+    cout << "\tSum of rows:\n";
+    print_row_sums(array2);
+    cout << "\tSum of columns:\n";
+    print_column_sums(array2);
+    cout << endl;
+
+    cout << "/* ARRAY 3 ANALYSIS: */\n";
+    cout << "\tMax value: " << get_max(array3) << endl;
+    cout << "\tMin value: " << get_min(array3) << endl;
+    sum = get_sum(array3);
+    cout << "\tSum: " << sum << endl;
+    cout << "\tAverage: " << fixed << setprecision(2)
+         << sum / float(ROWS*COLS) << endl;
+    cout << "\tSum of rows:\n";
+    print_row_sums(array3);
+    cout << "\tSum of columns:\n";
+    print_column_sums(array3);
+
+    return 0;
+}
+
+void print_column_sums(int arr[][COLS])
+{
+    for (int col = 0; col < COLS; col++)
+    {
+        int col_sum = 0;
+        for (int row = 0; row < ROWS; row++)
+            col_sum += arr[row][col];
+        cout << "\t\tCol [" << col << "] sum: " << col_sum << endl;
+    }
+}
+
+void print_row_sums(int arr[][COLS])
+{
+    for (int row = 0; row < ROWS; row++)
+    {
+        int row_sum = 0;
+        for (int col = 0; col < COLS; col++)
+            row_sum += arr[row][col];
+        cout << "\t\tRow [" << row << "] sum: " << row_sum << endl;
+    }
+}
+
+int get_sum(int arr[][COLS])
+{
+    int sum = 0;
+    for (int row = 0; row < ROWS; row++)
+        for (int col = 0; col < COLS; col++)
+            sum += arr[row][col];
+    return sum;
+}
+
+int get_max(int arr[][COLS])
+{
+    int highest = arr[0][0];
+    for (int row = 0; row < ROWS; row++)
+        for (int col = 0; col < COLS; col++)
+            if (arr[row][col] > highest)
+                highest = arr[row][col];
+    return highest;
+}
+
+int get_min(int arr[][COLS])
+{
+    int smallest = arr[0][0];
+    for (int row = 0; row < ROWS; row++)
+        for (int col = 0; col < COLS; col++)
+            if (arr[row][col] < smallest)
+                smallest = arr[row][col];
+    return smallest;
+}
+
+void addArrays(int arr1[][COLS], int arr2[][COLS],
+               int arr3[][COLS])
+{
+    for (int row = 0; row < ROWS; row++)
+        for (int col = 0; col < COLS; col++)
+            arr3[row][col] = arr1[row][col] + arr2[row][col];
+}
+
+void printArray(int arr[][COLS])
+{
+    for (int i = 0; i < ROWS; i++)
+    {
+        for (int j = 0; j < COLS; j++)
+            cout << setw(6) << arr[i][j];
+        cout << endl;
+    }
+    cout << endl;
+}
+
+void populateArray(int arr[][COLS])
+{
+    int temprand = 0;
+    for (int i = 0; i < ROWS; i++)
+        for (int j = 0; j < COLS; j++)
+        {
+            temprand = (rand() % MAXRAND + 1);
+            arr[i][j] = temprand;
+        }
+}
