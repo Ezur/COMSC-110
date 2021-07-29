@@ -1,0 +1,42 @@
+#include <iostream>
+using namespace std;
+
+void get_input(int &, int &);
+void get_input(int &, int &, int &);
+
+int main()
+{
+    int value1, value2, value3;
+
+	get_input(value1, value2);
+	cout << "in main: " << value1 << " "
+			 << value2 << endl;
+
+	get_input(value1, value2, value3);
+	cout << "in main: " << value1 << " "
+		 << value2 << " " << value3;
+
+	return 0;
+}
+
+void get_input(int &v1, int &v2)
+{
+	cout << "Enter 1st value: ";
+	cin >> v1;
+	cout << "2nd value: ";
+	cin >> v2;
+	cout << "in function: " << v1 << " "
+	     << v2 << endl;
+}
+
+void get_input(int &v1, int &v2, int &v3)
+{
+	cout << "Enter 1st value: ";
+	cin >> v1;
+	cout << "2nd value: ";
+	cin >> v2;
+	cout << "3rd value: ";
+	cin >> v3;
+	cout << "in function: " << v1 << " "
+	     << v2 << " " << v3 << endl;
+}
