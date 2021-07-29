@@ -1,0 +1,113 @@
+#include <iostream>
+#include <iomanip>
+using namespace std;
+
+int main()
+{
+    //declarations, welcome, instructions
+    int rounds = 0, throws, sum2, sum3, sum4, sum5, sum6, sum7, sum8, sum9,
+        sum10, sum11, sum12, random, die1, die2;
+    char again = 'N';
+    srand(time(0));
+    const int MIN = 1,
+              MAX = 6,
+              WIDTH = 8;
+    cout << fixed << setprecision(2);
+    cout << endl;
+    cout << "*******************************************************************\n";
+    cout << "**********************Dice Statistics******************************\n";
+    cout << "*******************************************************************\n\n";
+    cout << "This program will simulate dice rolls and calculate the percentages\n";
+    cout << "of each possible outcome. You input how many dice throws you'd like in\n";
+    cout << "each round. You can repeat and do another round, or quit when done.\n";
+    
+    do
+    {
+        //housekeeping for each round
+        rounds++;
+        sum2 = sum3 = sum4 = sum5 = sum6 = sum7 = sum8 = sum9 = sum10 = sum11 = sum12 = 0;
+        
+        //get user input
+        cout << "\nHow many dice throws do you want to do for round #" << rounds << "? --> ";
+        cin >> throws;
+        while (throws < 1) {
+            cout << "ERROR: you must have at least one dice throw. Reenter --> ";
+            cin >> throws;
+        }
+        
+        //throw the dice
+        for (int i = 1; i <= throws; i++)
+        {
+            die1 = rand() % (MAX - MIN + 1) + MIN;
+            die2 = rand() % (MAX - MIN + 1) + MIN;
+            random = die1 + die2;
+            switch (random)
+            {
+                case 2:
+                    sum2++;
+                    break;
+                case 3:
+                    sum3++;
+                    break;
+                case 4:
+                    sum4++;
+                    break;
+                case 5:
+                    sum5++;
+                    break;
+                case 6:
+                    sum6++;
+                    break;
+                case 7:
+                    sum7++;
+                    break;
+                case 8:
+                    sum8++;
+                    break;
+                case 9:
+                    sum9++;
+                    break;
+                case 10:
+                    sum10++;
+                    break;
+                case 11:
+                    sum11++;
+                    break;
+                case 12:
+                    sum12++;
+                    break;
+            }
+        }
+
+        //generate output
+        cout << "Statistics for round #" << rounds << ":\n";
+        cout << setw(WIDTH) << "Roll" << setw(WIDTH) << "Count" << setw(WIDTH) << "Pct" << endl;
+        cout << setw(WIDTH) << "----" << setw(WIDTH) << "-----" << setw(WIDTH) << "---" << endl;
+        cout << setw(WIDTH) << "2" << setw(WIDTH) << sum2 << setw(WIDTH) << (float)sum2/throws*100 << "%\n";
+        cout << setw(WIDTH) << "3" << setw(WIDTH) << sum3 << setw(WIDTH) << (float)sum3/throws*100 << "%\n";
+        cout << setw(WIDTH) << "4" << setw(WIDTH) << sum4 << setw(WIDTH) << (float)sum4/throws*100 << "%\n";
+        cout << setw(WIDTH) << "5" << setw(WIDTH) << sum5 << setw(WIDTH) << (float)sum5/throws*100 << "%\n";
+        cout << setw(WIDTH) << "6" << setw(WIDTH) << sum6 << setw(WIDTH) << (float)sum6/throws*100 << "%\n";
+        cout << setw(WIDTH) << "7" << setw(WIDTH) << sum7 << setw(WIDTH) << (float)sum7/throws*100 << "%\n";
+        cout << setw(WIDTH) << "8" << setw(WIDTH) << sum8 << setw(WIDTH) << (float)sum8/throws*100 << "%\n";
+        cout << setw(WIDTH) << "9" << setw(WIDTH) << sum9 << setw(WIDTH) << (float)sum9/throws*100 << "%\n";
+        cout << setw(WIDTH) << "10" << setw(WIDTH) << sum10 << setw(WIDTH) << (float)sum10/throws*100 << "%\n";
+        cout << setw(WIDTH) << "11" << setw(WIDTH) << sum11 << setw(WIDTH) << (float)sum11/throws*100 << "%\n";
+        cout << setw(WIDTH) << "12" << setw(WIDTH) << sum12 << setw(WIDTH) << (float)sum12/throws*100 << "%\n";
+
+        //repeat the program?
+        cout << "\nWould you like to run another simulation? Y/N --> ";
+        cin >> again;
+        again = toupper(again);
+        while (again != 'Y' and again != 'N') {
+            cout << "ERROR: only Y/N please --> ";
+            cin >> again;
+            again = toupper(again);
+        }
+
+    } while (again == 'Y');
+
+    cout << "\nProgram ending. Have a fantastic day.\n";
+
+    return 0;
+}
