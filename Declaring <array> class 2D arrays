@@ -1,0 +1,35 @@
+#include <iostream>
+#include <iomanip>
+#include <ctime>
+#include <array>
+using namespace std;
+
+const int ROWS = 3, COLS = 10, W1 = 4;
+
+//prototype for 2D <array> class array
+void printArr(array<array<int, COLS>, ROWS>); 
+
+int main()
+{
+    srand(time(0));
+    array<array<int, COLS>, ROWS> arr; //2D <array> class array
+    
+    //populate array with randoms then print
+    for (int r = 0; r < ROWS; r++)
+        for (int c = 0; c < COLS; c++)
+            arr[r][c] = rand() % 99;
+    printArr(arr);
+    
+    return 0;
+}
+
+void printArr(array<array<int, COLS>, ROWS> arr)
+{
+    for (int r = 0; r < ROWS; r++)
+    {
+        for (int c = 0; c < COLS; c++)
+            cout << setw(W1) << arr[r][c];
+        cout << endl;
+    }
+    cout << endl;
+}
