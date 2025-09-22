@@ -1,0 +1,74 @@
+//SORTA MESA
+
+#include <iostream>
+#include <ctime>
+#include <cstdlib>
+using namespace std;
+ 
+int main() {
+ 
+    // welcome, declarations
+    char keepgoing;
+    cout << "*** SORTA MESA PROGRAM ***\n";
+    cout << "This program will output a sideways pound sign mesa of a\n";
+    cout << "height of your choosing.\n\n";
+ 
+    // outer loop to repeat the program if desired
+    do
+    {
+        // user input and validation
+        cout << "How tall of a house do you want? Enter 5-25 only: ";
+        int userChoice;
+        cin >> userChoice;
+        while (userChoice < 5 or userChoice > 25)
+        {
+            cout << "ERROR: 5-25 only. Reenter: ";
+            cin >> userChoice;
+        }
+       
+        // output the mesa
+        for (int i = 1; i <= userChoice; i++) // incline portion
+        {
+            for (int j = 1; j <= i; j++)
+            {
+                if (j == 1) cout << "#";
+                else if (j == i) cout << "#";
+                else cout << " ";
+            }
+            cout << endl;
+        }
+        for (int i = 1; i <= userChoice; i++) // flat mesa portion
+        {
+            for (int j = 1; j <= userChoice; j++)
+            {
+                if (j == 1) cout << "#";
+                else if (j == userChoice) cout << "#";
+                else cout << " ";
+            }
+            cout << endl;
+        }
+        for (int i = userChoice; i >= 1; i--) // decline portion
+        {
+            for (int j = 1; j <= i; j++)
+            {
+                if (j == 1) cout << "#";
+                else if (j == i) cout << "#";
+                else cout << " ";
+            }
+            cout << endl;
+        }
+       
+        // user choice to continue or not
+        cout << "Again? Y/N: ";
+        cin >> keepgoing;
+        while (keepgoing != 'Y' and keepgoing != 'N' and keepgoing != 'y' and keepgoing != 'n')
+        {
+            cout << "ERROR: Y or N only --> ";
+            cin >> keepgoing;
+        }
+       
+    } while (keepgoing == 'Y' or keepgoing == 'y');
+   
+    return 0;
+}
+
