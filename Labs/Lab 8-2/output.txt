@@ -1,0 +1,18 @@
+Person #1:
+Elise
+19 years old
+200 lbs
+94556
+
+Person #2:
+Arielle
+23 years old
+220 lbs
+94556
+
+Person #3:
+Maya Zur
+8 years old
+15 lbs
+94556
+
