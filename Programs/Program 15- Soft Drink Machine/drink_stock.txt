@@ -1,0 +1,15 @@
+Cola
+1.25
+2
+Root Beer
+1.25
+25
+Grape Soda
+1.25
+25
+Gatorade
+2.00
+20
+Muscle Milk
+2.25
+2
